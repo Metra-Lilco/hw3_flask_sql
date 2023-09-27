@@ -26,6 +26,21 @@ def get_unique_names():
     con.close()
     return "<b>There is no unique names in 'customers'</b>"
 
+@app.route("/tracks/")
+def get_tracks_count():
+    con = sqlite3.connect("flask_sql.db")
+    cur = con.cursor()
+    query_tracks_count = '''
+    SELECT COUNT (*) FROM tracks
+    '''
+    cur.execute(query_tracks_count)
+    result = cur.fetchone()
+    if result:
+        con.close()
+        return f"There is <b>{result[0]}</b> tracks in 'tracks' table"
+    con.close()
+    return "<b>The 'tracks' table is empty!</b>"
+
 
 if __name__ == "__main__":
     # create_customers()
