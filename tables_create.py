@@ -19,12 +19,12 @@ def create_customers():
 
     fake = Faker()
     for _ in range(100):
-        gender = fake.random_element(elements=('Male', 'Female'))
+        gender = fake.random_element(elements=("Male", "Female"))
         first_name = fake.first_name_male() if gender=="Male"\
         else fake.first_name_female()
         last_name = fake.last_name_male() if gender=="Male"\
         else fake.last_name_female()
-        phone_number = f'+{fake.random_number(digits=12, fix_len=True)}'
+        phone_number = f"+{fake.random_number(digits=12, fix_len=True)}"
         with sqlite3.connect("flask_sql.db") as conn:
             cursor = conn.cursor()
             insert_query = """
