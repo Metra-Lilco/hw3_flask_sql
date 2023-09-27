@@ -41,8 +41,29 @@ def get_tracks_count():
     con.close()
     return "<b>The 'tracks' table is empty!</b>"
 
+@app.route("/tracks-sec/")
+def get_tracks_info():
+    con = sqlite3.connect("flask_sql.db")
+    cur = con.cursor()
+    query_tracks_info = '''
+    SELECT duration, ID, artist, song, release_date FROM tracks
+    '''
+    cur.execute(query_tracks_info)
+    result = cur.fetchall()
+    con.close()
+    if result:
+        track_rows = ""
+        for track in result:
+            duration, ID, artist, song, release_date = track
+            track_row = f"<li style='color:navy'><b>Duration:</b> {duration} \
+                        <b>sec.</b>, <b>Track ID:</b> {ID}, \
+                        <b>Artist:</b> {artist}, <b>Song:</b> {song}, \
+                        <b>Release date:</b> {release_date}</li>"
+            track_rows += track_row
+        return track_rows
+    return "<b>The 'tracks' table is empty!</b>"
 
 if __name__ == "__main__":
-    # create_customers()
-    # create_tracks()
+    create_customers()
+    create_tracks()
     app.run()
